@@ -2,6 +2,13 @@ import csv
 import io
 
 
+def bounds(numbers: list[int]) -> tuple[int, int]:
+    """Smallest and largest value. An empty column is 0 and 0."""
+    if not numbers:
+        return 0, 0
+    return min(numbers), max(numbers)
+
+
 def median(numbers: list[int]) -> float:
     """Middle value. An even count averages the two middle values. Empty is 0."""
     if not numbers:
@@ -28,4 +35,8 @@ def report_csv(text: str) -> str:
     mean = (total / len(numbers)) if numbers else 0.0
     spread = _stdev(numbers)
     mid = median(numbers)
-    return f"rows={len(rows)},sum={total},mean={mean:.3f},median={mid:.3f},stdev={spread:.3f}"
+    low, high = bounds(numbers)
+    return (
+        f"rows={len(rows)},sum={total},mean={mean:.3f},median={mid:.3f},"
+        f"min={low},max={high},stdev={spread:.3f}"
+    )
